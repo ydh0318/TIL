@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .done {
+      text-decoration: line-through;
+    }
+  </style>
+</head>
+<body>
+  <form action="/todos/">
+    <input type="text">
+    <button>Todo</button>
+  </form>
+  <ul></ul>
+
+<script>
+  const form = document.querySelector('form')
+  const ulTag = document.querySelector('ul')
+  
+  function addTodo (event) {
+    // 1. form 태그의 기본 이벤트 동작을 막는다.
+    // action에 아무것도 안적으면 현재 경로에 재요청을 보내게 됨.
+    event.preventDefault()
+    // 입력 element를 찾고 해당 입력 element의 value 값을 저장한다.
+    const inputTagValue = document.querySelector('input').value
+    
+    // li element를 생성 후 input element의 value 값을 데이터로 저장한다
+    const liTag = document.createElement('li')
+    console.log(inputTagValue)
+    liTag.textContent = inputTagValue
+
+    // ul 태그의 자식 태그로 위에서 생성한 li element를 넣는다.
+    ulTag.appendChild(liTag)
+
+    // 삭제 버튼을 생성 후 li 태그의 자식 태그로 넣는다.
+    const deleteTag = document.createElement('button')
+    deleteTag.textContent = '삭제'
+    liTag.appendChild(deleteTag)
+
+    // 삭제 버튼을 클릭하면 해당 li element를 삭제한다
+    // deleteTag.addEventListener('click', function (event) {
+    //   if (event.target.tagName == 'BUTTON') {
+    //     ulTag.removeChild(liTag)
+    //   } else {
+    //     console.log(event.target.tagName)
+    //     //취소선 긋기
+    //   }
+    // })
+    ulTag.addEventListener('click', function (event) {
+      // button Tag에서 이벤트가 발생 했을때,
+      // 그 버튼 태그가 속해있는 li 태그를 ul 태그로부터 삭제
+      if (event.target.tagName == 'BUTTON') {
+        event.target.parentNode.remove()
+      } else if (event.target.tagName == 'LI'){
+        event.target.classList.toggle('done')
+      // LI태그가 클릭이 되었다면?
+      // 취소선 그어주기
+    }
+  })
+
+  }
+
+  form.addEventListener('submit', addTodo)
+</script>
+</body>
+</html>
